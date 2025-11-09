@@ -1,0 +1,201 @@
+/*
+  This file is a CSS Module.
+  We cannot style global tags like 'body' directly from this file.
+  Instead, we style the classes .page and .main (which are used in page.tsx)
+  and then use the :global() selector to style the raw HTML tags
+  (like h1, input, button) that are *inside* .main.
+*/
+
+/* These are your MODULE classes */
+.page {
+  width: 100%;
+  min-height: 100vh;
+  /* Set background and font here, on the root element of your page */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background-color: #f4f7f6; /* Light gray background */
+  color: #333;
+  padding: 1px 0; /* Fixes margin collapse */
+}
+
+.main {
+  max-width: 960px; /* Center the content */
+  margin: 2rem auto; /* Auto margin for horizontal centering */
+  padding: 0 1.5rem; /* Padding on the sides */
+}
+
+/* --- Scoped Global Styles --- */
+/*
+  This syntax styles all <div> elements that are *direct children*
+  of the <div> inside <ToAuctionItems />.
+  We'll treat these as our "cards".
+*/
+.main :global(div > div) {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  /* Add a clear-fix in case of floated elements, good practice */
+  overflow: auto;
+}
+
+/* Style the "Total Funds Raised" div (the first card) differently */
+.main :global(div > div:first-child) {
+  background: #5D94D6;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Typography --- */
+.main :global(h1),
+.main :global(h2),
+.main :global(h3) {
+  color: black; /* Dark Blue */
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 0.5rem;
+}
+
+.main :global(h1) {
+  font-size: 1.75rem;
+}
+.main :global(h2) {
+  font-size: 1.4rem;
+  margin-top: 1.5rem;
+}
+.main :global(h3) {
+  font-size: 1.15rem;
+  margin-top: 1.5rem;
+  border-bottom: none;
+  color: #2b6cb0; /* Lighter Blue */
+}
+
+.main :global(p) {
+  line-height: 1.6;
+  color: black;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Forms & Buttons --- */
+.main :global(input) {
+  /* Full width minus padding, robust */
+  width: calc(100% - 1.6rem); 
+  padding: 0.8rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Style the <b> tags as proper labels */
+.main :global(b) {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: black;
+  margin-top: 0.5rem;
+  display: inline-block;
+  /* Add space between label and input */
+  margin-right: 0.5rem;
+}
+
+.main :global(button) {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  margin-top: 1rem;
+  background-color: #4054EB; /* Blue */
+  color: white;
+  /* Add space next to inputs if they are on the same line */
+  margin-left: 0.5rem;
+}
+
+/* Make buttons full-width if they are on their own line */
+.main :global(p + button),
+.main :global(ul + button),
+.main :global(input + button) {
+  width: 100%;
+  margin-left: 0;
+}
+
+
+.main :global(button:hover) {
+  background-color: #142DEB; /* Darker Blue */
+}
+
+.main :global(button:disabled) {
+  background-color: #e2e2e2;
+  cursor: not-allowed;
+}
+
+.main :global(button:disabled:hover) {
+  background-color: #e2e2e2;
+}
+
+/* --- Lists --- */
+.main :global(ul) {
+  list-style-type: none;
+  padding: 0;
+  margin: 1rem 0 0 0;
+}
+
+.main :global(li) {
+  background-color: grey;
+  border: 1px solid #e2e8f0;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+}
+
+/* Remove distracting <br> tags */
+.main :global(br) {
+  display: none;
+}
+
+/* This is a new MODULE class, not a global style.
+  It's applied to the <div> in closeauction.tsx
+*/
+.auctionClosedCard {
+  /* This styles the outer "card" wrapper */
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Style the <h1> inside the new card */
+.auctionClosedCard h1 {
+  color: #2c5282;
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+  border: none;
+}
+
+/* Style the <p> inside the new card */
+.auctionClosedCard p {
+  background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); /* Green */
+  color: white;
+  font-size: 1.75rem;
+  font-weight: 600;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 0;
+}
